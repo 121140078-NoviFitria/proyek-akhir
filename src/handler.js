@@ -33,13 +33,17 @@ const addBookHandler = (request, h) => {
 
     books.push(newBook);
 
-    const response = h.response({
-        status: 'success',
-        message: 'Buku berhasil ditambahkan',
-        data: { bookId: id },
-    });
-    response.code(201);
-    return response;
+    const isSuccess = books.filter((book) => book.id === id).length > 0;
+    if (isSuccess) {
+        const response = h.response({
+            status: 'success',
+            message: 'Buku berhasil ditambahkan',
+            data: { bookId: id },
+        });
+        response.code(201);
+        return response;
+    }
+    
 };
 
 const getAllBooksHandler = () => ({
